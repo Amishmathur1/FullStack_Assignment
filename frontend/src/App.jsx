@@ -34,12 +34,30 @@ function App() {
     setData(null)
 
     try {
-      let parsedData
+      let parsedData = [];
+      let rawText = inputVal.trim();
+      
       try {
-        parsedData = JSON.parse(inputVal)
-        if (!Array.isArray(parsedData)) throw new Error("Parsed data is not an array")
+        // Attempt strict JSON parse first
+        let jsonObj = JSON.parse(rawText);
+        if (Array.isArray(jsonObj)) {
+          parsedData = jsonObj; // [ "A->B", ... ]
+        } else if (jsonObj && typeof jsonObj === 'object' && Array.isArray(jsonObj.data)) {
+          parsedData = jsonObj.data; // { "data": [ "A->B", ... ] }
+        } else {
+          throw new Error("Valid JSON, but unhandled structure.");
+        }
       } catch (err) {
-        throw new Error("Invalid JSON format. Please ensure input is a valid JSON array of strings.")
+        // Fallback: assume raw comma-separated strings, possibly missing brackets
+        let cleanedText = rawText.replace(/^[\{\[]/, '').replace(/[\}\]]$/, '').trim();
+        if (cleanedText) {
+          parsedData = cleanedText.split(',').map(item => {
+            // Remove lingering quotes and whitespace
+            return item.trim().replace(/^["']|["']$/g, '');
+          });
+        } else {
+          throw new Error("Invalid input format. Please try standard formatted JSON.");
+        }
       }
 
       // Hardcoded local URL for now. Will be replaced by standard routing during deployment.
