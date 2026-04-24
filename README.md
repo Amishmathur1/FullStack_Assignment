@@ -2,6 +2,10 @@
 
 A full-stack application that processes interconnected alphabetic arrays into hierarchical graph trees, rendering cycle detections and structure depth dynamically. Built for the SRM Full Stack Engineering Challenge.
 
+## Live Deployment Links
+- **📱 Frontend Live UI**: [https://full-stack-assignment-br83.vercel.app/](https://full-stack-assignment-br83.vercel.app/)
+- **⚙️ Backend API Base URL**: `https://full-stack-assignment-gilt.vercel.app` *(Send POST requests to `/bfhl`)*
+
 ## Technology Stack
 - **Frontend**: Built with React, Vite, and CSS. Showcases premium "Glassmorphism" UI panels layering over a custom animated Keyframe background.
 - **Backend / API**: Built with Node.js and Express to cleanly solve complex graphical data loops within a sub-3 second constraint.
